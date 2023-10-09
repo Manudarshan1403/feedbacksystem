@@ -1,1 +1,1 @@
-"This is admin dashboard"
+"This is admin home"
