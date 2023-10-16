@@ -10,9 +10,8 @@ const questionSchema = new mongoose.Schema(
     },
 
     isRating: {
-      type: Number,
-      min: [1, "rating must be above 1"],
-      max: [10, "rating must be less than or equal to 10"],
+      type: Boolean,
+      required:[true,"Please let us know whether this question needs ragting or not"]
     
     },
 
