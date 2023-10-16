@@ -19,7 +19,28 @@ const courseSchema = new mongoose.Schema(
       ],
       trim: true,
     },
-  },
+
+    duration:{
+      type:String,
+      required:[true,"each course must have a duration"],
+      trim:true,
+    },
+
+    topics:{
+      type:Array,
+      required:[true,"must mention the topics to be teached in each course"],
+    },
+
+    fees:{
+      type:Number,
+      required:[true,"must mention appropriate fees for the course"],
+    },
+
+    approxNoOfClasses:{
+      type:Number
+    }
+
+},
 
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

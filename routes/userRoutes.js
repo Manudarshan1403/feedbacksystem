@@ -6,10 +6,12 @@ const router = express.Router();
 
 router.post("/signup", userController.signup);
 router.post("/login", userController.login);
+
 router
   .route("/")
-  .get(userController.restrictTo("admin"),userController.getAllUsers)
-  .post(userController.createUser);
-router.route("/:id").get(userController.restrictTo("admin"),userController.getUser);
+  .get(userController.protect,userController.restrictTo("admin"),userController.getAllUsers);
+  
+
+router.route("/:id").get(userController.protect,userController.restrictTo("admin"),userController.getUser);
 
 module.exports = router;

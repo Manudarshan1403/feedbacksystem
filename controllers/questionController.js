@@ -4,6 +4,17 @@ const Question = require("./../models/questionModel");
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 
+exports.getAllQuestions = catchAsync(async (req, res) => {
+  const questions = await Question.find();
+
+  res
+    .status(200)
+    .json({
+      status: "success",
+      result: questions.length,
+      data: { question: questions},
+    });
+});
 
 exports.createQuestion = catchAsync(async (req, res) => {
     const newQuestion = await Question.create(req.body);

@@ -5,7 +5,8 @@ const userController = require("./../controllers/userController");
 const router = express.Router();
 
 router
-  .route("/")
+  .route("/").get(
+    questionController.getAllQuestions)
   .post(
     userController.protect,
     userController.restrictTo("admin"),

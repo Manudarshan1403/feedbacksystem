@@ -23,7 +23,8 @@ const answerSchema = new mongoose.Schema(
       ],
       trim: true,
     },
-    Topic: {
+
+    topic: {
       type: String,
       required: [
         true,
@@ -48,6 +49,32 @@ const answerSchema = new mongoose.Schema(
         message: "Day is either:monday,tuesday,wednesday,thursday,friday",
       },
     },
+
+    question:{
+      type:String,
+      trim:true,
+      required:[true,"please mention the question based on which employess's are evaluated"],
+
+    },
+
+    answer:{
+      type:String,
+      trim:true,
+      required:[true,"please provide the answer"],
+    },
+
+    rating: {
+      type: Number,
+      min: [1, "rating must be above 1"],
+      max: [10, "rating must be less than or equal to 10"],
+    
+    },
+
+    totalScore:{
+      type:Number,
+      required:true
+    }
+
   },
 
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }

@@ -10,7 +10,12 @@ router
     userController.protect,
     userController.restrictTo("admin"),
     courseController.createCourse
-  );
+  ).get(userController.protect,userController.restrictTo("admin"),
+  courseController.getAllCourseDetails);
+
+  router.route("/coursenames").get(userController.protect,
+    userController.restrictTo("admin"),
+    courseController.getCourseNames);
 
 router
   .route("/:id")

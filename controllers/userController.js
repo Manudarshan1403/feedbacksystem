@@ -12,10 +12,50 @@ const signToken = (id) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const newUser = await User.create(req.body);
+  const existingAdmin = await User.findOne({ isAdmin: true });
+  if (existingAdmin) {
+    const newUser = new User({
+      
+      email: req.body.email,
+      role: req.body.role,
+      password: req.body.password,
+      passwordConfirm: req.body.passwordConfirm,
+      employeeName:req.body.employeeName,
+      dateOfJoining:req.body.dateOfJoining,
+      salary:req.body.salary,
+      experience:req.body.experience,
+      skillset:req.body.skillset,
+      jobType:req.body.jobType,
+      isAdmin: false,
+    });
+    await newUser.save();
+  } else {
+    const newUser = new User({
+      
+      email: req.body.email,
+      role: req.body.role,
+      password: req.body.password,
+      passwordConfirm: req.body.passwordConfirm,
+      employeeName:req.body.employeeName,
+      dateOfJoining:req.body.dateOfJoining,
+      salary:req.body.salary,
+      experience:req.body.experience,
+      skillset:req.body.skillset,
+      jobType:req.body.jobType,
+      isAdmin: true,
+     
+    });
+    await newUser.save();
+  }
   const token = signToken(newUser._id);
   res.status(201).json({ status: "success", token, data: { user: newUser } });
-});
+})
+
+// exports.signup = catchAsync(async (req, res, next) => {
+//   const newUser = await User.create(req.body);
+//   const token = signToken(newUser._id);
+//   res.status(201).json({ status: "success", token, data: { user: newUser } });
+// });
 
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
@@ -99,11 +139,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createUser = catchAsync(async (req, res) => {
-  const newUser = await User.create(req.body);
 
-  res.status(201).json({ status: "success", data: { user: newUser } });
-});
 
 exports.getUser = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.params.id);
