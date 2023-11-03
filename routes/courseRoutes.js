@@ -13,8 +13,7 @@ router
   ).get(userController.protect,userController.restrictTo("admin"),
   courseController.getAllCourseDetails);
 
-  router.route("/coursenames").get(userController.protect,
-    userController.restrictTo("admin"),
+  router.route("/coursenames").get(
     courseController.getCourseNames);
 
 router

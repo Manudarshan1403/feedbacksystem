@@ -5,13 +5,13 @@ const userController = require("./../controllers/userController");
 const router = express.Router();
 
 router
+  .route('/:id')
+  .patch(answerController.updateAnswer)
+
+router
   .route("/")
   .post(answerController.createAnswer)
   .get(
-    userController.protect,
-    userController.restrictTo("admin"),
     answerController.getAllAnswers
   );
-  
-
 module.exports = router;

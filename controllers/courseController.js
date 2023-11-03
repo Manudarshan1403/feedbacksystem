@@ -21,7 +21,7 @@ exports.getCourseNames = catchAsync(async (req, res) => {
   let courseNames = [];
   function extractCourseNames() {
     for (let course of courses) {
-      courseNames.push(course.name);
+      courseNames.push(course.courseName);
     }
     return courseNames;
   }

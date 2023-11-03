@@ -14,7 +14,10 @@ const questionSchema = new mongoose.Schema(
       required:[true,"Please let us know whether this question needs ragting or not"]
     
     },
-
+    required: {
+      type: Boolean,
+      required: [true,"Is this question, a choice"]
+    }
   },
 
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }

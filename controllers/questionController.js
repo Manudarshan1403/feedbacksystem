@@ -6,8 +6,7 @@ const AppError = require("./../utils/appError");
 
 exports.getAllQuestions = catchAsync(async (req, res) => {
   const questions = await Question.find();
-
-  res
+  res.set('Access-Control-Allow-Origin','*')
     .status(200)
     .json({
       status: "success",

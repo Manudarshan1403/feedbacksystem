@@ -40,17 +40,12 @@ const answerSchema = new mongoose.Schema(
 
     Day: {
       type: String,
-      required: [
-        true,
-        "a evaluator must mention day of conducting class by trainer",
-      ],
       enum: {
         values: ["monday", "tuesday", "wednesday", "thursday", "friday"],
         message: "Day is either:monday,tuesday,wednesday,thursday,friday",
       },
     },
-
-    question:{
+    questions:[{question:{
       type:String,
       trim:true,
       required:[true,"please mention the question based on which employess's are evaluated"],
@@ -63,23 +58,26 @@ const answerSchema = new mongoose.Schema(
       required:[true,"please provide the answer"],
     },
 
-    rating: {
+    score: {
       type: Number,
-      min: [1, "rating must be above 1"],
+      min: [0, "rating must be above 1"],
       max: [10, "rating must be less than or equal to 10"],
     
-    },
+    }}],
 
     totalScore:{
       type:Number,
       required:true
-    }
-
+    },
+    isSelfReviewed:{
+      type:Boolean,
+      required:true
+    },
+    accomplished:String,hudle:String,improvement:String
   },
 
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
-
 const Answer = mongoose.model("Answer", answerSchema);
 
 module.exports = Answer;

@@ -32,18 +32,6 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
 
-  passwordConfirm: {
-    type: String,
-    required: [true, "please confirm your password"],
-    //this works only on save or create or post!!
-    validate: {
-      validator: function (el) {
-        return el === this.password;
-      },
-      message: "passwords are not the same ",
-    },
-  },
-
   employeeId:{
     type:Number,
     required:[true,"each employee must have unique id"],
@@ -81,13 +69,15 @@ skillset:{
 jobType:{
   type:String,
   required:true,
-  unique:true,
 },
 
 isAdmin: {
   type: Boolean,
   required: [true, "mention whether you are admin or not"],
 },
+passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date,
 } ,{ toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
 userSchema.pre("save", async function (next) {
@@ -107,7 +97,8 @@ userSchema.pre("save",async function(next){
   this.employeeId = (users.length-1)+1;
   this.userName = "this.employeeName+this.employeeId";
   next();
-})
+});
+
 
 
 // userSchema.pre("save", function (next) {
@@ -136,6 +127,22 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   //False means not changed
   return false;
 };
+
+userSchema.methods.createPasswordResetToken = function() {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  console.log({ resetToken }, this.passwordResetToken);
+
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
+};
+
 
 const User = mongoose.model("User", userSchema);
 

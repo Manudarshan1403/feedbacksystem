@@ -9,9 +9,13 @@ router.post("/login", userController.login);
 
 router
   .route("/")
-  .get(userController.protect,userController.restrictTo("admin"),userController.getAllUsers);
+  .get(userController.getAllUsers);
   
 
 router.route("/:id").get(userController.protect,userController.restrictTo("admin"),userController.getUser);
+
+router.post('/forgotPassword', userController.forgotPassword);
+router.patch('/resetPassword/:token', userController.resetPassword);
+
 
 module.exports = router;
